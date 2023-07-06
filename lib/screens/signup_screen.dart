@@ -3,6 +3,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ig_clone/resources/auth_methods.dart';
+import 'package:ig_clone/responsive/mobile_screen_layout.dart';
+import 'package:ig_clone/responsive/responsive_layout_screen.dart';
+import 'package:ig_clone/responsive/web_screen_layout.dart';
 import 'package:ig_clone/screens/login_screen.dart';
 import 'package:ig_clone/utils/colors.dart';
 import 'package:ig_clone/utils/utils.dart';
@@ -50,7 +53,7 @@ class _SignupScreenState extends State<SignupScreen> {
       password: _passController.text,
       username: _usernameController.text,
       bio: _bioController.text,
-      file: _image,
+      file: _image!,
     );
 
     setState(() {
@@ -58,7 +61,16 @@ class _SignupScreenState extends State<SignupScreen> {
     });
     if (res != 'success') {
       showSnackBar(res, context);
-    } else {}
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            webScreenLayout: WebScreenLayout(),
+            mobileScreenLayout: MobileScreenLayout(),
+          ),
+        ),
+      );
+    }
   }
 
   void navigateToLogin() {
@@ -175,7 +187,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: const Text('Already have an account?'),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: navigateToLogin,
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: const Text(

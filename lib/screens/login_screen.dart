@@ -6,6 +6,10 @@ import 'package:ig_clone/utils/colors.dart';
 import 'package:ig_clone/utils/utils.dart';
 import 'package:ig_clone/widgets/text_field_input.dart';
 
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/web_screen_layout.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -33,6 +37,14 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailController.text, password: _passController.text);
 
     if (res == 'success') {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            webScreenLayout: WebScreenLayout(),
+            mobileScreenLayout: MobileScreenLayout(),
+          ),
+        ),
+      );
     } else {
       showSnackBar(res, context);
     }
